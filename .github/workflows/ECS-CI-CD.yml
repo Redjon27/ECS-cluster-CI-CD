@@ -1,0 +1,103 @@
+name: Test - Build - Deploy ECS
+on:
+  workflow_dispatch:
+    branches:
+    - dev
+  pull_request:
+    branches:
+    - dev
+
+env:
+  HTTP_PROXY: http://proxy.r-services.at:57165
+  HTTPS_PROXY: http://proxy.r-services.at:57165
+  NO_PROXY: localhost,127.0.0.1,rbinternational.corp,rbi.tech,.amazonaws.com,github.com,dotnetcli.blob.core.windows.net,download.visualstudio.microsoft.com,api.nuget.org,dotnetcli.azureedge.net
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION: eu-central-1
+  CONTAINER_NAME: hello-world-app1
+  ECR_REGISTRY: 535479077865.dkr.ecr.eu-central-1.amazonaws.com
+  ECR_REPO: docker
+  ECS_CLUSTER: test-cluster
+  ECS_TD: hello-world-app1
+  ECS_SV: hello-world1-service
+  SHORT_SHA: $(echo ${{ github.sha }} | cut -c 1-8)
+  RELEASE_REVISION: "pr-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.sha }}"
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  release:
+    name: Release
+    runs-on: rbi-ho-runner
+    environment: Test
+
+    steps:
+    - name: Check commit status
+      id: commit-status
+      run: "CURRENT_STATUS=$(curl --url https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/status --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | jq -r '.state');\necho \"Current status is: $CURRENT_STATUS\"\nwhile [ \"${CURRENT_STATUS^^}\" = \"PENDING\" ]; \n  do sleep 10; \n  CURRENT_STATUS=$(curl --url https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/status --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | jq -r '.state');\ndone;\necho \"Current status is: $CURRENT_STATUS\"\nif [ \"${CURRENT_STATUS^^}\" = \"FAILURE\" ]; \n  then echo \"Commit status failed. Canceling execution\"; \n  exit 1; \nfi\n"
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} # do krijohen ne GITHUB 
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # do krijohet ne GITHUB
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Login to AWS ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, Tag and Push Image to ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: latest
+        TAG: ${{ github.run_number }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPO:$IMAGE_TAG .
+        docker build -t $ECR_REGISTRY/$ECR_REPO:$TAG .
+        docker push $ECR_REGISTRY/$ECR_REPO:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPO:$TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPO:$IMAGE_TAG"
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPO:$TAG"
+
+    - name: Download Task Definition
+      run: |
+        aws ecs describe-task-definition --task-definition $ECS_TD --query taskDefinition > task-definition.json
+        cat task-definition.json
+    - name: Fill Image ID in the ECS Client Task Definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: ./task-definition.json
+        container-name: ${{ env.CONTAINER_NAME }}
+        image: ${{ steps.build-image.outputs.image }}
+
+    - name: Deploy ECS Task Definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        ignore_warnings: true
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: ${{ env.ECS_SV }}
+        cluster: ${{ env.ECS_CLUSTER }}
+        wait-for-service-stability: true # optionally set to true not to false if you want to wait for all old containerrs to drain and to re-deploy!!!!!
+
+# publish:
+#   runs-on: rbi-ho-runner
+#   needs: Release
+#   steps:
+#   - name: Create Release
+#     id: create_release
+#     uses: actions/create-release@v1
+#     env:
+#       GITHUB_TOKEN: ${{ secrets.github_token }}
+#     with:
+#       tag_name: ${{ github.run_number }}
+#       release_name: Release ${{ github.run_number }}
+#       body: New release for ${{ github.sha }}.
+#       draft: false
+#       prerelease: false
