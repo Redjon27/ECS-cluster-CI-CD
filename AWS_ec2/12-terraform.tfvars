@@ -1,0 +1,9 @@
+/* vpc_id        = "vpc-0c929d201065c9a4a"
+subnet_id     = "subnet-09f6ccee580256269"
+subnet_id1    = "subnet-0e8251e240b76f3d3"
+key_name      = "redjon"
+instance_type = "t2.micro"
+ami           = "ami-0caef02b518350c8b"
+region        = "eu-central-1"
+domain_name      = "redjon.com"
+alternative_name = "*.redjon.com" */

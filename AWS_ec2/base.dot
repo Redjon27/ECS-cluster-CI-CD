@@ -1,0 +1,127 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] aws_acm_certificate.acm_certificate (expand)" [label = "aws_acm_certificate.acm_certificate", shape = "box"]
+		"[root] aws_acm_certificate_validation.acm_certificate_validation (expand)" [label = "aws_acm_certificate_validation.acm_certificate_validation", shape = "box"]
+		"[root] aws_appautoscaling_policy.ecs_policy (expand)" [label = "aws_appautoscaling_policy.ecs_policy", shape = "box"]
+		"[root] aws_appautoscaling_target.ecs_target (expand)" [label = "aws_appautoscaling_target.ecs_target", shape = "box"]
+		"[root] aws_cloudwatch_log_group.example_container (expand)" [label = "aws_cloudwatch_log_group.example_container", shape = "box"]
+		"[root] aws_cloudwatch_log_resource_policy.elasticsearch-log-publishing-policy (expand)" [label = "aws_cloudwatch_log_resource_policy.elasticsearch-log-publishing-policy", shape = "box"]
+		"[root] aws_dynamodb_table.table (expand)" [label = "aws_dynamodb_table.table", shape = "box"]
+		"[root] aws_ecr_repository.docker (expand)" [label = "aws_ecr_repository.docker", shape = "box"]
+		"[root] aws_ecr_repository_policy.pythonpolicy (expand)" [label = "aws_ecr_repository_policy.pythonpolicy", shape = "box"]
+		"[root] aws_ecs_cluster.main (expand)" [label = "aws_ecs_cluster.main", shape = "box"]
+		"[root] aws_ecs_service.hello-world1 (expand)" [label = "aws_ecs_service.hello-world1", shape = "box"]
+		"[root] aws_ecs_task_definition.hello-world-app1 (expand)" [label = "aws_ecs_task_definition.hello-world-app1", shape = "box"]
+		"[root] aws_iam_role.ecs_tasks_execution_role (expand)" [label = "aws_iam_role.ecs_tasks_execution_role", shape = "box"]
+		"[root] aws_iam_role_policy_attachment.ecs_tasks_execution_role (expand)" [label = "aws_iam_role_policy_attachment.ecs_tasks_execution_role", shape = "box"]
+		"[root] aws_lb.application_load_balancer (expand)" [label = "aws_lb.application_load_balancer", shape = "box"]
+		"[root] aws_lb_listener.alb_http_listener (expand)" [label = "aws_lb_listener.alb_http_listener", shape = "box"]
+		"[root] aws_lb_listener.alb_https_listener (expand)" [label = "aws_lb_listener.alb_https_listener", shape = "box"]
+		"[root] aws_lb_target_group.alb_target_group (expand)" [label = "aws_lb_target_group.alb_target_group", shape = "box"]
+		"[root] aws_route53_record.route53_record (expand)" [label = "aws_route53_record.route53_record", shape = "box"]
+		"[root] aws_route53_record.site_domain (expand)" [label = "aws_route53_record.site_domain", shape = "box"]
+		"[root] aws_s3_bucket.redjon-bucket (expand)" [label = "aws_s3_bucket.redjon-bucket", shape = "box"]
+		"[root] aws_s3_bucket_acl.redjon_bucket_acl (expand)" [label = "aws_s3_bucket_acl.redjon_bucket_acl", shape = "box"]
+		"[root] aws_s3_bucket_public_access_block.redjon_public_block (expand)" [label = "aws_s3_bucket_public_access_block.redjon_public_block", shape = "box"]
+		"[root] aws_s3_bucket_server_side_encryption_configuration.redjon-encryption (expand)" [label = "aws_s3_bucket_server_side_encryption_configuration.redjon-encryption", shape = "box"]
+		"[root] aws_s3_bucket_versioning.versioning_redjon (expand)" [label = "aws_s3_bucket_versioning.versioning_redjon", shape = "box"]
+		"[root] aws_security_group.AWS_SG2 (expand)" [label = "aws_security_group.AWS_SG2", shape = "box"]
+		"[root] aws_security_group.alb_security_group (expand)" [label = "aws_security_group.alb_security_group", shape = "box"]
+		"[root] aws_security_group.ecs_security_group (expand)" [label = "aws_security_group.ecs_security_group", shape = "box"]
+		"[root] data.aws_iam_policy_document.ecs_tasks_execution_role_policy (expand)" [label = "data.aws_iam_policy_document.ecs_tasks_execution_role_policy", shape = "box"]
+		"[root] data.aws_iam_policy_document.elasticsearch-log-publishing-policy (expand)" [label = "data.aws_iam_policy_document.elasticsearch-log-publishing-policy", shape = "box"]
+		"[root] data.aws_route53_zone.hosted_zone (expand)" [label = "data.aws_route53_zone.hosted_zone", shape = "box"]
+		"[root] data.aws_route53_zone.route53_zone (expand)" [label = "data.aws_route53_zone.route53_zone", shape = "box"]
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"]" [label = "provider[\"registry.terraform.io/hashicorp/aws\"]", shape = "diamond"]
+		"[root] var.ami" [label = "var.ami", shape = "note"]
+		"[root] var.domain_name" [label = "var.domain_name", shape = "note"]
+		"[root] var.instance_type" [label = "var.instance_type", shape = "note"]
+		"[root] var.key_name" [label = "var.key_name", shape = "note"]
+		"[root] var.record_name" [label = "var.record_name", shape = "note"]
+		"[root] var.region" [label = "var.region", shape = "note"]
+		"[root] var.subnet_id" [label = "var.subnet_id", shape = "note"]
+		"[root] var.subnet_id1" [label = "var.subnet_id1", shape = "note"]
+		"[root] var.vpc_id" [label = "var.vpc_id", shape = "note"]
+		"[root] aws_acm_certificate.acm_certificate (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_acm_certificate.acm_certificate (expand)" -> "[root] var.domain_name"
+		"[root] aws_acm_certificate_validation.acm_certificate_validation (expand)" -> "[root] aws_route53_record.route53_record (expand)"
+		"[root] aws_appautoscaling_policy.ecs_policy (expand)" -> "[root] aws_appautoscaling_target.ecs_target (expand)"
+		"[root] aws_appautoscaling_target.ecs_target (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_cloudwatch_log_group.example_container (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_cloudwatch_log_resource_policy.elasticsearch-log-publishing-policy (expand)" -> "[root] data.aws_iam_policy_document.elasticsearch-log-publishing-policy (expand)"
+		"[root] aws_dynamodb_table.table (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_ecr_repository.docker (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_ecr_repository_policy.pythonpolicy (expand)" -> "[root] aws_ecr_repository.docker (expand)"
+		"[root] aws_ecs_cluster.main (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_ecs_service.hello-world1 (expand)" -> "[root] aws_ecs_cluster.main (expand)"
+		"[root] aws_ecs_service.hello-world1 (expand)" -> "[root] aws_ecs_task_definition.hello-world-app1 (expand)"
+		"[root] aws_ecs_service.hello-world1 (expand)" -> "[root] aws_lb_target_group.alb_target_group (expand)"
+		"[root] aws_ecs_service.hello-world1 (expand)" -> "[root] aws_security_group.ecs_security_group (expand)"
+		"[root] aws_ecs_task_definition.hello-world-app1 (expand)" -> "[root] aws_ecr_repository.docker (expand)"
+		"[root] aws_ecs_task_definition.hello-world-app1 (expand)" -> "[root] aws_iam_role.ecs_tasks_execution_role (expand)"
+		"[root] aws_iam_role.ecs_tasks_execution_role (expand)" -> "[root] data.aws_iam_policy_document.ecs_tasks_execution_role_policy (expand)"
+		"[root] aws_iam_role_policy_attachment.ecs_tasks_execution_role (expand)" -> "[root] aws_iam_role.ecs_tasks_execution_role (expand)"
+		"[root] aws_lb.application_load_balancer (expand)" -> "[root] aws_security_group.alb_security_group (expand)"
+		"[root] aws_lb_listener.alb_http_listener (expand)" -> "[root] aws_lb.application_load_balancer (expand)"
+		"[root] aws_lb_listener.alb_https_listener (expand)" -> "[root] aws_acm_certificate.acm_certificate (expand)"
+		"[root] aws_lb_listener.alb_https_listener (expand)" -> "[root] aws_lb_target_group.alb_target_group (expand)"
+		"[root] aws_lb_target_group.alb_target_group (expand)" -> "[root] aws_lb.application_load_balancer (expand)"
+		"[root] aws_route53_record.route53_record (expand)" -> "[root] aws_acm_certificate.acm_certificate (expand)"
+		"[root] aws_route53_record.route53_record (expand)" -> "[root] data.aws_route53_zone.route53_zone (expand)"
+		"[root] aws_route53_record.site_domain (expand)" -> "[root] aws_lb.application_load_balancer (expand)"
+		"[root] aws_route53_record.site_domain (expand)" -> "[root] data.aws_route53_zone.hosted_zone (expand)"
+		"[root] aws_route53_record.site_domain (expand)" -> "[root] var.record_name"
+		"[root] aws_s3_bucket.redjon-bucket (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_s3_bucket_acl.redjon_bucket_acl (expand)" -> "[root] aws_s3_bucket.redjon-bucket (expand)"
+		"[root] aws_s3_bucket_public_access_block.redjon_public_block (expand)" -> "[root] aws_s3_bucket.redjon-bucket (expand)"
+		"[root] aws_s3_bucket_server_side_encryption_configuration.redjon-encryption (expand)" -> "[root] aws_s3_bucket.redjon-bucket (expand)"
+		"[root] aws_s3_bucket_versioning.versioning_redjon (expand)" -> "[root] aws_s3_bucket.redjon-bucket (expand)"
+		"[root] aws_security_group.AWS_SG2 (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_security_group.AWS_SG2 (expand)" -> "[root] var.vpc_id"
+		"[root] aws_security_group.alb_security_group (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_security_group.alb_security_group (expand)" -> "[root] var.vpc_id"
+		"[root] aws_security_group.ecs_security_group (expand)" -> "[root] aws_security_group.alb_security_group (expand)"
+		"[root] data.aws_iam_policy_document.ecs_tasks_execution_role_policy (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] data.aws_iam_policy_document.elasticsearch-log-publishing-policy (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] data.aws_route53_zone.hosted_zone (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] data.aws_route53_zone.hosted_zone (expand)" -> "[root] var.domain_name"
+		"[root] data.aws_route53_zone.route53_zone (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] data.aws_route53_zone.route53_zone (expand)" -> "[root] var.domain_name"
+		"[root] output.acm_certificate_arn (expand)" -> "[root] aws_acm_certificate.acm_certificate (expand)"
+		"[root] output.alb_load_balancer_dns (expand)" -> "[root] aws_lb.application_load_balancer (expand)"
+		"[root] output.alb_load_balancer_zone_id (expand)" -> "[root] aws_lb.application_load_balancer (expand)"
+		"[root] output.alb_target_group_arn (expand)" -> "[root] aws_lb_target_group.alb_target_group (expand)"
+		"[root] output.record_name (expand)" -> "[root] aws_route53_record.site_domain (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_acm_certificate_validation.acm_certificate_validation (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_appautoscaling_policy.ecs_policy (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_cloudwatch_log_group.example_container (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_cloudwatch_log_resource_policy.elasticsearch-log-publishing-policy (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_dynamodb_table.table (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_ecr_repository_policy.pythonpolicy (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_ecs_service.hello-world1 (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_iam_role_policy_attachment.ecs_tasks_execution_role (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_lb_listener.alb_http_listener (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_lb_listener.alb_https_listener (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_route53_record.site_domain (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_s3_bucket_acl.redjon_bucket_acl (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_s3_bucket_public_access_block.redjon_public_block (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_s3_bucket_server_side_encryption_configuration.redjon-encryption (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_s3_bucket_versioning.versioning_redjon (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_security_group.AWS_SG2 (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"]" -> "[root] var.region"
+		"[root] root" -> "[root] output.acm_certificate_arn (expand)"
+		"[root] root" -> "[root] output.alb_load_balancer_dns (expand)"
+		"[root] root" -> "[root] output.alb_load_balancer_zone_id (expand)"
+		"[root] root" -> "[root] output.alb_target_group_arn (expand)"
+		"[root] root" -> "[root] output.record_name (expand)"
+		"[root] root" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)"
+		"[root] root" -> "[root] var.ami"
+		"[root] root" -> "[root] var.instance_type"
+		"[root] root" -> "[root] var.key_name"
+		"[root] root" -> "[root] var.subnet_id"
+		"[root] root" -> "[root] var.subnet_id1"
+	}
+}
+
