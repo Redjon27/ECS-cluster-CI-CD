@@ -5,19 +5,19 @@
 variable "vpc_id" {
   type        = string
   description = "ID of an existing VPC in which to create the cluster."
-  default     = "vpc-0c929d201065c9a4a"
+  default     = ""
 }
 
 variable "subnet_id" {
   type        = string
   description = "ID of an existing subnet in which to create the cluster. The subnet must be in the VPC specified in the \"vpc_id\" variable, otherwise an error occurs."
-  default     = "subnet-09f6ccee580256269"
+  default     = "s"
 }
 
 variable "subnet_id1" {
   type        = string
   description = "ID of an existing subnet in which to create the cluster. The subnet must be in the VPC specified in the \"vpc_id\" variable, otherwise an error occurs."
-  default     = "subnet-0e8251e240b76f3d3"
+  default     = ""
 }
 
 variable "key_name" {
