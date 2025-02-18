@@ -8,9 +8,6 @@ on:
     - dev
 
 env:
-  HTTP_PROXY: http://proxy.r-services.at:57165
-  HTTPS_PROXY: http://proxy.r-services.at:57165
-  NO_PROXY: localhost,127.0.0.1,rbinternational.corp,rbi.tech,.amazonaws.com,github.com,dotnetcli.blob.core.windows.net,download.visualstudio.microsoft.com,api.nuget.org,dotnetcli.azureedge.net
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_REGION: eu-central-1
